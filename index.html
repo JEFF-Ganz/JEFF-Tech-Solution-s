@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="id">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Jefrin Telaumbanua">
+        <title>JEFF TEch Solution's</title>
+
+        <style>
+            /* =========================================
+           1. RESET & VARIABEL
+           ========================================= */
+            :root {
+                --primary: #000000;
+                --accent: #ff0000;
+                /* WA Green */
+                --bg-body: #FAFAFA;
+                --gray-text: #666666;
+                --border: #E5E5E5;
+                --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                --bottom-nav-height: 60px;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            }
+
+            body {
+                background-color: var(--bg-body);
+                color: #333;
+                padding-bottom: calc(var(--bottom-nav-height) + 20px);
+                /* Space agar konten tidak tertutup nav */
+            }
+
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+
+            /* Utility Class untuk Hide/Show Halaman */
+            .page-section {
+                display: none;
+                animation: fadeIn 0.3s ease;
+            }
+
+            .page-section.active {
+                display: block;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(5px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* =========================================
+           2. HEADER (STICKY TOP)
+           ========================================= */
+            header {
+                background: #fff;
+                padding: 15px 20px;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                border-bottom: 1px solid var(--border);
+                text-align: center;
+            }
+
+            .brand {
+                font-weight: 800;
+                font-size: 1.1rem;
+                letter-spacing: -0.5px;
+            }
+
+            /* =========================================
+           3. HALAMAN HOME (BERANDA)
+           ========================================= */
+            .hero-banner {
+                background: linear-gradient(135deg, #111 0%, #333 100%);
+                color: white;
+                padding: 40px 20px;
+                text-align: center;
+                border-radius: 0 0 20px 20px;
+                margin-bottom: 20px;
+            }
+
+            .hero-banner h1 {
+                font-size: 1.8rem;
+                margin-bottom: 10px;
+            }
+
+            .hero-banner p {
+                font-size: 0.9rem;
+                opacity: 0.9;
+                margin-bottom: 20px;
+            }
+
+            .btn-main {
+                background: var(--accent);
+                color: white;
+                padding: 10px 24px;
+                border-radius: 50px;
+                font-weight: 600;
+                display: inline-block;
+                box-shadow: 0 1px 2px rgb(222, 223, 223);
+            }
+
+            .btn-main:hover {
+                transform: translateY(-5px);
+                background: #e60000;
+                box-shadow: 0 2px 2px rgb(222, 223, 223);
+
+            }
+
+
+            .features {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .feature-card {
+                background: white;
+                padding: 15px;
+                border-radius: 12px;
+                text-align: center;
+                box-shadow: var(--card-shadow);
+                transition: 0.3s;
+            }
+
+            .feature-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            }
+
+
+            .feature-icon {
+                font-size: 1.5rem;
+                margin-bottom: 5px;
+            }
+
+            .feature-title {
+                font-weight: 600;
+                font-size: 0.9rem;
+            }
+
+            .feature-desc {
+                font-size: 0.75rem;
+                color: var(--gray-text);
+            }
+
+            /* =========================================
+           4. HALAMAN KATALOG (GRID)
+           ========================================= */
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 0 10px;
+            }
+
+            .product-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding-top: 10px;
+            }
+
+            @media (min-width: 768px) {
+                .product-grid {
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 20px;
+                }
+            }
+
+            .product-card {
+                background: #fff;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: var(--card-shadow);
+                display: flex;
+                flex-direction: column;
+                transition: 0.3s;
+            }
+
+            .product-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            }
+
+            .img-wrap {
+                padding-top: 100%;
+                position: relative;
+                background: #eee;
+            }
+
+            .img-wrap img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .p-info {
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                justify-content: space-between;
+            }
+
+            .p-title {
+                font-size: 0.85rem;
+                font-weight: 500;
+                margin-bottom: 4px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .p-price {
+                font-weight: 700;
+                margin-bottom: 8px;
+            }
+
+            .btn-wa-sm {
+                background: var(--accent);
+                color: white;
+                text-align: center;
+                padding: 6px;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                display: block;
+            }
+
+            /* =========================================
+           5. HALAMAN PROFIL (OWNER)
+           ========================================= */
+            .profile-header {
+                background: white;
+                padding: 30px 20px;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            .avatar {
+                width: 150px;
+                height: 150px;
+                background: #ddd;
+                border-radius: 50%;
+                margin: 0 auto 15px;
+                overflow: hidden;
+                /* border: 3px solid var(--accent); */
+                box-shadow: 10px 10px 12px rgba(0, 0, 0, 0.1);
+                transition: 0.3s;
+            }
+
+            .avatar:hover {
+                transform: scale(1.05);
+                box-shadow: 10px 10px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            .avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .owner-name {
+                font-size: 1.3rem;
+                font-weight: 700;
+            }
+
+            .owner-role {
+                color: var(--gray-text);
+                font-size: 0.9rem;
+                margin-bottom: 15px;
+            }
+
+            .info-list {
+                background: white;
+                padding: 20px;
+                margin-top: 10px;
+            }
+
+            .info-item {
+                display: flex;
+                align-items: center;
+                padding: 12px 0;
+                border-bottom: 1px solid #eee;
+            }
+
+            .info-item:last-child {
+                border-bottom: none;
+            }
+
+            .info-label {
+                width: 100px;
+                font-weight: 600;
+                color: #555;
+                font-size: 0.9rem;
+            }
+
+            .info-val {
+                flex: 1;
+                font-size: 0.9rem;
+            }
+
+            /* =========================================
+   STYLE SOCIAL MEDIA BUTTONS
+   ========================================= */
+            .social-links {
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+                margin: 15px 0 20px 0;
+                /* Jarak atas bawah */
+            }
+
+            .social-btn {
+                width: 42px;
+                height: 42px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                color: white;
+                font-size: 0;
+                /* Hide text fallback */
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s ease;
+            }
+
+            .social-btn:hover {
+                transform: translateY(-3px);
+                /* Efek naik saat di-hover */
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .social-btn svg {
+                width: 20px;
+                height: 20px;
+                fill: white;
+            }
+
+            /* Warna Brand */
+            .bg-ig {
+                background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+            }
+
+            .bg-tiktok {
+                background: #000000;
+            }
+
+            .bg-tele {
+                background: #0088cc;
+            }
+
+            .bg-fb {
+                background: #1877F2;
+            }
+
+            /* =========================================
+           6. BOTTOM NAVIGATION (APP STYLE)
+           ========================================= */
+            .bottom-nav {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: var(--bottom-nav-height);
+                background: white;
+                border-top: 1px solid var(--border);
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                z-index: 999;
+            }
+
+            .nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                color: #999;
+                font-size: 0.7rem;
+                cursor: pointer;
+                transition: 0.2s;
+                width: 100%;
+                padding: 8px 0;
+            }
+
+            .nav-item svg {
+                width: 24px;
+                height: 24px;
+                fill: #999;
+                margin-bottom: 2px;
+                transition: 0.2s;
+            }
+
+            /* State Aktif */
+            .nav-item.active {
+                color: var(--primary);
+                font-weight: 600;
+            }
+
+            .nav-item.active svg {
+                fill: var(--primary);
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <header>
+            <div class="brand">JEFF TEch Solution's</div>
+        </header>
+
+        <section id="home-page" class="page-section active">
+            <div class="hero-banner">
+                <h1>Solusi Akademik Cepat & Berkualitas 🎓</h1>
+                <p>Nikmati masa mudamu tanpa dihantui tugas. Mulai dari makalah, presentasi, sampai hitungan rumit, tim
+                    kami siap bantu kerjakan dengan garansi nilai aman, Riset mendalam, format rapi, dan tepat waktu.
+                </p>
+                <div onclick="switchTab('catalog-page')" class="btn-main" style="cursor: pointer;">Order Sekarang
+                </div>
+            </div>
+
+            <div class="container">
+                <h3 style="padding: 0 10px; font-size: 1.1rem;">Kenapa Harus Joki di Sini?</h3>
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <div class="feature-title">Fast Respons</div>
+                        <div class="feature-desc">Balasan cepat via WhatsApp</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <div class="feature-title">Privasi Aman</div>
+                        <div class="feature-desc">Rahasia Terjamin (Aman dari Dosen dan Orang Lain)</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <div class="feature-title">Harga Bersahabat</div>
+                        <div class="feature-desc">Tanpa biaya tersembunyi dan masih bisa nego</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-title">Revisi Puas</div>
+                        <div class="feature-desc">Siap Merevisi sampai puas tanpa biaya tambahan</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="catalog-page" class="page-section">
+            <div class="container">
+                <div style="padding: 15px 0 5px 0;">
+                    <h2 style="font-size: 1.2rem;">Pilih Jenis Tugasmu</h2>
+                    <p style="font-size: 0.85rem; color: #666;">Harga menyesuaikan deadline & kesulitan.</p>
+                </div>
+
+                <div class="product-grid">
+
+                    <div class="product-card">
+                        <div class="img-wrap">
+                            <img src="/images/makalah.png" alt="Joki Makalah">
+                        </div>
+                        <div class="p-info">
+                            <div class="p-title">Makalah, Paper & Essay (Indo/Inggris)</div>
+                            <div class="p-price" style="font-size: 0.9rem; color: #d32f2f;">Mulai Rp 50.000</div>
+                            <div style="font-size: 0.7rem; color: #888; margin-bottom: 8px;">Include: Daftar Pustaka,
+                                Footnote
+                            </div>
+                            <a href="https://wa.me/6282261081469?text=Halo%20Bang%20Jeff,%20mau%20order%20Makalah/Paper"
+                                class="btn-wa-sm">Order Sekarang</a>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="img-wrap">
+                            <img src="/images/ppt.jpg" alt="Joki PPT">
+                        </div>
+                        <div class="p-info">
+                            <div class="p-title">PowerPoint Kreatif & Interaktif</div>
+                            <div class="p-price" style="font-size: 0.9rem; color: #d32f2f;">Mulai Rp 25.000</div>
+                            <div style="font-size: 0.7rem; color: #888; margin-bottom: 8px;">Include: Animasi, Transisi,
+                                Grafik
+                            </div>
+                            <a href="https://wa.me/6282261081469?text=Halo%20Bang%20Jeff,%20mau%20order%20Desain%20PPT"
+                                class="btn-wa-sm">Order Sekarang</a>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="img-wrap">
+                            <img src="/images/coding.png" alt="Joki Coding">
+                        </div>
+                        <div class="p-info">
+                            <div class="p-title">Tugas Coding Web & Pemrograman</div>
+                            <div class="p-price" style="font-size: 0.9rem; color: #d32f2f;">Mulai Rp 100.000</div>
+                            <div style="font-size: 0.7rem; color: #888; margin-bottom: 8px;">HTML, CSS, Python, Java,
+                                C++</div>
+                            <a href="https://wa.me/6282261081469?text=Halo%20Bang%20Jeff,%20mau%20order%20Coding"
+                                class="btn-wa-sm">Order Sekarang</a>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="img-wrap">
+                            <img src="/images/jurnal.png" alt="Joki Jurnal">
+                        </div>
+                        <div class="p-info">
+                            <div class="p-title">Review Jurnal & Resume Buku</div>
+                            <div class="p-price" style="font-size: 0.9rem; color: #d32f2f;">Mulai Rp 25.000</div>
+                            <div style="font-size: 0.7rem; color: #888; margin-bottom: 8px;">Jurnal dan Resume Buku
+                                Tertentu</div>
+                            <a href="https://wa.me/6282261081469?text=Halo%20Bang%20Jeff,%20mau%20order%20Resume/Jurnal"
+                                class="btn-wa-sm">Order Sekarang</a>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="img-wrap">
+                            <img src="/images/poster.jpg" alt="Joki Desain">
+                        </div>
+                        <div class="p-info">
+                            <div class="p-title">Desain Poster, Feed IG, Banner</div>
+                            <div class="p-price" style="font-size: 0.9rem; color: #d32f2f;">Mulai Rp 40.000</div>
+                            <div style="font-size: 0.7rem; color: #888; margin-bottom: 8px;">File mentahan (Canva)
+                            </div>
+                            <a href="https://wa.me/6282261081469?text=Halo%20Bang%20Jeff,%20mau%20order%20Jasa%20Desain"
+                                class="btn-wa-sm">Order Sekarang</a>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="img-wrap">
+                            <img src="/images/ketik ulang.jpg" alt="Jasa Ketik">
+                        </div>
+                        <div class="p-info">
+                            <div class="p-title">Jasa Ketik & Rapikan Dokumen</div>
+                            <div class="p-price" style="font-size: 0.9rem; color: #d32f2f;">Mulai Rp 2.500 /hlm</div>
+                            <div style="font-size: 0.7rem; color: #888; margin-bottom: 8px;">Daftar isi otomatis, Margin
+                                rapi
+                            </div>
+                            <a href="https://wa.me/6282261081469?text=Halo%20Bang%20Jeff,%20mau%20order%20Jasa%20Ketik/Edit"
+                                class="btn-wa-sm">Order Sekarang</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="profile-page" class="page-section">
+            <div class="profile-header">
+                <div class="avatar">
+                    <img src="/images/Profil.jpg" alt="Foto Owner">
+                </div>
+                <h2 class="owner-name">Jeff</h2>
+                <div class="owner-role">Programmer And IT Consultant</div>
+                <p style="font-size:0.9rem; color:#555; line-height:1.6;">
+                    "Melayani dengan sepenuh hati, memberikan solusi terbaik untuk setiap kebutuhan akademik Anda.
+                    Kepuasan Anda adalah prioritas utama kami."
+                </p>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.instagram.com/_jefrynztx_?igsh=MWlzZ2E0N2d1cDRpNA==" target="_blank"
+                    class="social-btn bg-ig" title="Instagram">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                </a>
+
+                <a href="https://vm.tiktok.com/ZSHEwHjBnfXpB-pJAFO/" target="_blank" class="social-btn bg-tiktok"
+                    title="TikTok">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v6.14c0 3.48-2.63 5.76-5.35 5.76-2.45 0-4.93-1.44-5.22-4.47-.12-1.35.39-3.21 1.54-4.28 1.45-1.4 3.92-1.33 5.43.34v-4.14c-4.43-.59-8.49 1.7-9.52 5.92-1.29 5.3 2.14 10.4 7.63 10.55 4.1.11 8.01-2.67 8.94-6.83.25-1.11.23-2.35.1-3.56v-9.61c-1.07.75-2.3 1.25-3.6 1.4-1.4.16-2.83.04-4.21.03v-4.2z" />
+                    </svg>
+                </a>
+
+                <a href="https://www.facebook.com/share/17kwX3gkAf/" target="_blank" class="social-btn bg-fb"
+                    title="Facebook">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+            </div>
+            </div>
+
+            <div class="info-list">
+                <div class="info-item">
+                    <div class="info-label">Nama Usaha</div>
+                    <div class="info-val">JEFF TEch Solution's</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Berdiri Sejak</div>
+                    <div class="info-val">2024</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Lokasi</div>
+                    <div class="info-val">Universitas Nias, Gunungsitoli</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">WhatsApp</div>
+                    <div class="info-val" style="color: var(--accent); font-weight:600;">0822-6108-1469</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Jam Ops</div>
+                    <div class="info-val">Setiap Hari (08:00 - 23:00)</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px; padding: 0 20px;">
+                <a href="https://wa.me/6282261081469" class="btn-main" style="width:100%;">Chat Owner Sekarang</a>
+            </div>
+        </section>
+
+        <nav class="bottom-nav">
+            <div class="nav-item active" onclick="switchTab('home-page', this)">
+                <svg viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
+                <span>Beranda</span>
+            </div>
+
+            <div class="nav-item" onclick="switchTab('catalog-page', this)">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm0 6h4v-4h-4v4zm0 6h4v-4h-4v4z" />
+                </svg>
+                <span>Katalog</span>
+            </div>
+
+            <div class="nav-item" onclick="switchTab('profile-page', this)">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                </svg>
+                <span>Profil</span>
+            </div>
+        </nav>
+
+        <script>
+            function switchTab(pageId, element) {
+                // 1. Sembunyikan semua section halaman
+                const sections = document.querySelectorAll('.page-section');
+                sections.forEach(sec => sec.classList.remove('active'));
+
+                // 2. Tampilkan section yang dipilih
+                document.getElementById(pageId).classList.add('active');
+
+                // 3. Update warna icon di Bottom Nav (jika diklik dari nav)
+                if (element) {
+                    const navItems = document.querySelectorAll('.nav-item');
+                    navItems.forEach(item => item.classList.remove('active'));
+                    element.classList.add('active');
+                } else {
+                    // Jika dipanggil dari tombol "Belanja Sekarang", manual set nav aktif ke Katalog
+                    if (pageId === 'catalog-page') {
+                        const navItems = document.querySelectorAll('.nav-item');
+                        navItems.forEach(item => item.classList.remove('active'));
+                        navItems[1].classList.add('active'); // Index 1 adalah tombol katalog
+                    }
+                }
+
+                // Scroll ke atas setiap pindah halaman
+                window.scrollTo(0, 0);
+            }
+        </script>
+
+    </body>
+
+</html>
